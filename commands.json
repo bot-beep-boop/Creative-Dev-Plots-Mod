@@ -1,10 +1,10 @@
 {
   "setrank" : {
     "options" : {
-      "1" [
+      "1" : [
         "%onlinePlayers%"
       ],
-      "2" [
+      "2" : [
         "admin",
         "mod",
         "support",
