@@ -33,10 +33,16 @@ repositories {
 	}
 }
 
+configurations {
+	shadow {
+
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
-	implementation 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
-	implementation "me.tecc:dgsdk:0.1"
+	shadow 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
+	shadow "me.tecc:dgsdk:0.1"
 
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -50,6 +56,20 @@ dependencies {
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }
+
+shadowJar {
+	configurations = [project.configurations.shadow]
+}
+
+import net.fabricmc.loom.task.RemapJarTask
+task remapShadowJar(type: RemapJarTask) {
+	input.value(shadowJar.archiveFile)
+	addNestedDependencies.value(false)
+	archiveClassifier.value("all-mapped")
+}
+
+remapShadowJar.mustRunAfter shadowJar
+build.dependsOn remapShadowJar
 
 processResources {
 	inputs.property "version", project.version
