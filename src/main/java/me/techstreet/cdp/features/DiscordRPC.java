@@ -4,6 +4,7 @@ import de.jcm.discordgamesdk.Core;
 import de.jcm.discordgamesdk.CreateParams;
 import de.jcm.discordgamesdk.activity.Activity;
 import me.tecc.dgsdk.DGameSDK;
+import me.techstreet.cdp.Main;
 import me.techstreet.cdp.utils.Mode;
 
 import java.time.Instant;
@@ -14,41 +15,48 @@ public class DiscordRPC {
     private static Core INSTANCE;
 
     public static void init() {
-        DGameSDK.init();
-
-        try (CreateParams params = new CreateParams()) {
+        if (INSTANCE != null) return;
+        try {
+            Main.LOGGER.debug("Initialising Discord RPC");
+            DGameSDK.init();
+            CreateParams params = new CreateParams();
             params.setClientID(887370487565541378L);
             params.setFlags(CreateParams.getDefaultFlags());
             // Create the Core
-            try (Core core = new Core(params)) {
-                INSTANCE = core;
-            }
+            INSTANCE = new Core(params);
+            Main.LOGGER.debug("Discord RPC initialised");
+        } catch (Throwable t) {
+            Main.LOGGER.error("Couldn't initialise Discord RPC", t);
+            INSTANCE = null;
         }
     }
 
     public static void update(String data) {
         if (!oldData.equals(data)) {
-            System.out.println("starting rpc");
+            Main.LOGGER.debug("Discord RPC updating");
 
-            data = oldData;
+            oldData = data;
             // Set parameters for the Core
-            try (Activity activity = new Activity()) {
-                System.out.println("starting activity");
+            Main.LOGGER.debug("Creating activity");
+            Activity activity = new Activity();
 
-                activity.setDetails(data.split(":")[0]);
-                activity.setState(data.split(":")[1]);
-
-                // Setting a start time causes an "elapsed" field to appear
-                activity.timestamps().setStart(Instant.now());
-
-                // Make a "cool" image show up
-                activity.assets().setLargeImage("large");
-
-                // Finally, update the current activity to our activity
-                System.out.println("updating activity");
-                INSTANCE.activityManager().updateActivity(activity);
-                System.out.println("updated activiy");
+            String[] dataParts = data.split(":");
+            if (dataParts.length > 0) {
+                activity.setDetails(dataParts[0]);
             }
+            if (dataParts.length > 1) {
+                activity.setState(data.split(":")[1]);
+            }
+
+            // Setting a start time causes an "elapsed" field to appear
+            activity.timestamps().setStart(Instant.now());
+
+            // Make a "cool" image show up
+            activity.assets().setLargeImage("large");
+
+            // Finally, update the current activity to our activity
+            Main.LOGGER.debug("Updating activity");
+            INSTANCE.activityManager().updateActivity(activity);
         }
         INSTANCE.runCallbacks();
     }
@@ -57,6 +65,8 @@ public class DiscordRPC {
         try {
             INSTANCE.activityManager().clearActivity();
             oldData = "";
+            INSTANCE.close();
+            INSTANCE = null;
         } catch (Exception e) {
             return;
         }
