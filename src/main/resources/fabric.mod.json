@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "cdp",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "CDP Mod",
+  "description": "A mod for the DiamondFire plot Creative Dev Plots!\nPlot ID: 50020",
   "authors": [
-    "Me!"
+    "TechStreet"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/TechStreetDev/Creative-Dev-Plots-Mod"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/cdp/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "me.techstreet.cdp.Main"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "cdp.mixins.json"
   ],
 
   "depends": {
@@ -34,5 +34,8 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "modmenu:clientsideOnly": true
   }
 }
