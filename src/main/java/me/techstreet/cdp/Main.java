@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main implements ModInitializer {
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger(Main.class);
 	public static int TICK_COUNTER = 0;
 
 	@Override
@@ -20,7 +20,7 @@ public class Main implements ModInitializer {
 
 		Runtime.getRuntime().addShutdownHook(new Thread(this::onClose));
 
-		System.out.println("Hello Fabric world!");
+		LOGGER.info("Initialising CDP");
 
 		DiscordRPC.init();
 
@@ -30,7 +30,6 @@ public class Main implements ModInitializer {
 			if (TICK_COUNTER == 4) {
 				TICK_COUNTER = 0;
 				ChatRecievedEvent.PLOT = false;
-				DiscordRPC.close();
 			}
 		});
 	}
