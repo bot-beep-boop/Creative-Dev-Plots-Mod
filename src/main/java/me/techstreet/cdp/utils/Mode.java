@@ -5,6 +5,7 @@ public enum Mode {
     BUILD("Build"),
     PLAY("Play"),
     SPAWN("Spawn"),
+    IDLE("Idle"),
     UNKNOWN("Unknown");
 
     private final String identifier;

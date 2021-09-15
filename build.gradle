@@ -41,8 +41,8 @@ configurations {
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	shadow 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
-	shadow "me.tecc:dgsdk:0.1"
+	implementation 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
+	implementation "me.tecc:dgsdk:0.1"
 
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
