@@ -34,5 +34,15 @@
                 "Plot ID"
             ]
         }
+    },
+    "plot": {
+        "options": {
+            "1": [
+                "dev",
+                "builder",
+                "name",
+                "ad"
+            ]
+        }
     }
 }
