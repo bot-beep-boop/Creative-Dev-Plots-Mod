@@ -1,19 +1,44 @@
 {
-  "setrank" : {
-    "options" : {
-      "1" : [
-        "%onlinePlayers%"
-      ],
-      "2" : [
-        "admin",
-        "mod",
-        "support",
-        "builder"
-        "yt",
-        "tester",
-        "retired",
-        "donor"
-      ]
+    "setrank": {
+        "options": {
+            "1": [
+                "%onlinePlayers%"
+            ],
+            "2": [
+                "admin",
+                "mod",
+                "support",
+                "builder",
+                "yt",
+                "tester",
+                "retired",
+                "donor"
+            ]
+        }
+    },
+    "play": {
+        "options": {}
+    },
+    "dev": {
+        "options": {}
+    },
+    "code": {
+        "options": {}
+    },
+    "build": {
+        "options": {}
+    },
+    "join": {
+        "options": {}
+    },
+    "plot": {
+        "options": {
+            "1": [
+                "dev",
+                "builder",
+                "name",
+                "ad"
+            ]
+        }
     }
-  }
 }
