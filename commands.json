@@ -29,11 +29,7 @@
         "options": {}
     },
     "join": {
-        "options": {
-            "1": [
-                "Plot ID"
-            ]
-        }
+        "options": {}
     },
     "plot": {
         "options": {
