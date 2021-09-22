@@ -4,6 +4,7 @@ This mod is for the [DiamondFire](http://mcdiamondfire.com) plot, Creative Dev P
 * Discord RPC, what plot you are, what are you doing in the plot, plot status (code block) + time you spent on the plot.
 * Switch to CDP using node selector in DF nodes.
 * Switch to DF nodes using CDP node selector.
+* Adds tablist prefixes for people on the plot.
 
 ## Contribution
 
