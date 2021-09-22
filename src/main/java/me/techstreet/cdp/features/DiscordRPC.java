@@ -1,33 +1,65 @@
 package me.techstreet.cdp.features;
 
-import de.jcm.discordgamesdk.Core;
-import de.jcm.discordgamesdk.CreateParams;
-import de.jcm.discordgamesdk.activity.Activity;
-import me.tecc.dgsdk.DGameSDK;
+import com.jagrosh.discordipc.IPCClient;
+import com.jagrosh.discordipc.IPCListener;
+import com.jagrosh.discordipc.entities.RichPresence;
+import com.jagrosh.discordipc.entities.pipe.PipeStatus;
+import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 import me.techstreet.cdp.Main;
 import me.techstreet.cdp.utils.Mode;
 import org.apache.logging.log4j.Level;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
 public class DiscordRPC {
 
-    private static Mode LAST_MODE = Mode.UNKNOWN;
-    private static Core INSTANCE;
+    public static boolean delayRPC = false;
+
+    public static RichPresence.Builder builder;
+    private static Mode oldState = Mode.UNKNOWN;
+    private static OffsetDateTime time;
+    private static IPCClient client;
 
     public static void init() {
-        try {
-            Main.log(Level.DEBUG, "Initialising Discord RPC...");
-            DGameSDK.init();
-            CreateParams params = new CreateParams();
-            params.setClientID(887370487565541378L);
-            params.setFlags(CreateParams.getDefaultFlags());
-            // Create the Core
-            INSTANCE = new Core(params);
-            Main.log(Level.DEBUG, "Discord RPC initialised!");
-        } catch (Throwable t) {
-            Main.log(Level.ERROR, "Couldn't initialise Discord RPC!");
-            INSTANCE = null;
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Main.log(Level.INFO, "[DiscordRPC] Closing Discord hook.");
+            try {
+                close();
+            } catch (Exception e) {
+                Main.log(Level.ERROR, "[DiscordRPC] Error while closing Discord hook.");
+            }
+        }));
+
+        Main.log(Level.INFO, "[DiscordRPC] Starting Discord hook.");
+        client = new IPCClient(887370487565541378L);
+        client.setListener(new IPCListener() {
+            @Override
+            public void onReady(IPCClient client) {
+                RichPresence.Builder builder = new RichPresence.Builder();
+                builder.setDetails("Playing");
+                DiscordRPC.builder = builder;
+            }
+        });
+
+        Main.log(Level.INFO, "[DiscordRPC] Started Discord hook.");
+
+    }
+
+    public static void connect() {
+        if(!isConnected()){
+            try {
+                Main.log(Level.INFO, "[DiscordRPC] Connecting to discord client.");
+                client.connect();
+            } catch (NoDiscordClientException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void close() {
+        if(isConnected()) {
+            Main.log(Level.INFO, "[DiscordRPC] Closing discord hook.");
+            client.close();
         }
     }
 
@@ -41,52 +73,43 @@ public class DiscordRPC {
             mode = Mode.UNKNOWN;
         }
 
-        if (!mode.equals(LAST_MODE)) {
-            LAST_MODE = mode;
+        if (!mode.equals(oldState)) {
+            oldState = mode;
+
+            Main.log(Level.INFO, "[DiscordRPC] Starting discord RPC.");
 
             new Thread(() -> {
-                // Set parameters for the Core
-                Activity activity = new Activity();
 
-                if (dataParts.length > 0) {
-                    activity.setDetails(dataParts[0]);
+                if (!isConnected()) {
+                    connect();
                 }
 
-                if (dataParts.length > 1) {
-                    if (!dataParts[1].equals("()")) {
-                        activity.setState(data.split(":")[1]);
-                    }
+                Main.log(Level.INFO, "[DiscordRPC] Building the presence.");
+
+                // Set parameters for the Core
+                RichPresence.Builder presence = new RichPresence.Builder();
+
+                presence.setDetails(dataParts[0]);
+
+                if (!dataParts[1].equals("()")) {
+                    presence.setState(data.split(":")[1]);
                 }
 
                 // Setting a start time causes an "elapsed" field to appear
-                activity.timestamps().setStart(Instant.now());
+                time = OffsetDateTime.now();
+                presence.setStartTimestamp(time);
 
                 // Make a "cool" image show up
-                activity.assets().setLargeImage("large");
-                activity.assets().setLargeText("/join 50020");
+                presence.setLargeImage("large", "/join 50020");
 
                 // Finally, update the current activity to our activity
-                INSTANCE.activityManager().updateActivity(activity);
-
-                INSTANCE.runCallbacks();
+                Main.log(Level.INFO, "[DiscordRPC] Pushing to discord.");
+                client.sendRichPresence(presence.build());
             }).start();
         }
     }
 
-    public static void close() {
-        try {
-            INSTANCE.activityManager().clearActivity();
-            LAST_MODE = Mode.UNKNOWN;
-        } catch (Exception e) {
-            return;
-        }
-    }
-
-    public static void disconnect() {
-        try {
-            INSTANCE.close();
-        } catch (Exception e) {
-            return;
-        }
+    private static boolean isConnected() {
+        return client.getStatus() == PipeStatus.CONNECTED;
     }
 }

@@ -1,7 +1,6 @@
 package me.techstreet.cdp.events;
 
 import me.techstreet.cdp.Main;
-import me.techstreet.cdp.features.DiscordRPC;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.Level;
@@ -38,13 +37,24 @@ public class ChatRecievedEvent {
 
         if (text.startsWith("FORWARD_DATA:Heartbeat")) {
             Main.TICK_COUNTER = 0;
-
+            Main.ON_PLOT = true;
             cancel = true;
         }
 
         if (text.startsWith("FORWARD_DATA:DiscordRPC:")) {
+            /*
             String data = text.replaceFirst("FORWARD_DATA:DiscordRPC:", "");
             DiscordRPC.update(data);
+             */
+            cancel = true;
+        }
+
+        if (text.startsWith("FORWARD_DATA:UserPrefix:")) {
+            String data = text.replaceFirst("FORWARD_DATA:DiscordRPC:", "");
+            String[] dataParts = data.split(":");
+
+            Main.PREFIX_CACHE.put(dataParts[2], dataParts[3]);
+
             cancel = true;
         }
 
