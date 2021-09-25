@@ -3,7 +3,7 @@ This `1.16.5` mod is for the [DiamondFire](http://mcdiamondfire.com) plot, Creat
 * `@commands` auto complition
 * Discord RPC, what plot you are, what are you doing in the plot, plot status (code block) + time you spent on the plot.
 * Switch to CDP using node selector in DF nodes.
-* Switch to DF nodes using CDP node selector.
+* Switch to DF nodes using CDP node selector. **[Implemented]**
 * Adds tablist prefixes for people on the plot. **[Implemented]**
 
 ## Contribution
