@@ -2,7 +2,6 @@
     "setrank": {
         "options": {
             "1": [
-                "%onlinePlayers%"
             ],
             "2": [
                 "admin",
