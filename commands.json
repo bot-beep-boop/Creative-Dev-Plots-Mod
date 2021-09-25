@@ -34,21 +34,21 @@
         "options": {
             "1": [
                 "dev": {
-                    "arguments" [
+                    "arguments": [
                         "add",
                         "remove",
                         "list"
                     ]
                 },
                 "builder": {
-                    "arguments" [
+                    "arguments": [
                         "add",
                         "remove",
                         "list"
                     ]
                 },
                 "ad": {
-                    "arguments" [
+                    "arguments": [
                         "purchase",
                         "[message]"
                     ]
