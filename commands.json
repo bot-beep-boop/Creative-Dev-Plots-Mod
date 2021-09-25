@@ -1,60 +1,9 @@
 {
-    "setrank": {
-        "options": {
-            "1": [
-            ],
-            "2": [
-                "admin",
-                "mod",
-                "support",
-                "builder",
-                "yt",
-                "tester",
-                "retired",
-                "donor"
-            ]
-        }
-    },
-    "play": {
-        "options": {}
-    },
-    "dev": {
-        "options": {}
-    },
-    "code": {
-        "options": {}
-    },
-    "build": {
-        "options": {}
-    },
-    "join": {
-        "options": {}
-    },
-    "plot": {
-        "options": {
-            "1": [
-                "dev": {
-                    "arguments": [
-                        "add",
-                        "remove",
-                        "list"
-                    ]
-                },
-                "builder": {
-                    "arguments": [
-                        "add",
-                        "remove",
-                        "list"
-                    ]
-                },
-                "ad": {
-                    "arguments": [
-                        "purchase",
-                        "[message]"
-                    ]
-                },
-                "name"
-            ]
-        }
-    }
+    "setrank": {},
+    "play": {},
+    "dev": {},
+    "code": {},
+    "build": {},
+    "join": {},
+    "plot": {}
 }
