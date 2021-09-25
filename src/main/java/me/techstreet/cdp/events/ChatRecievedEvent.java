@@ -36,13 +36,17 @@ public class ChatRecievedEvent {
         }
 
         if (text.startsWith("FORWARD_DATA:PlayerNodeConnect:")) {
-            String data = text.replaceFirst("FORWARD_DATA:PlayerNodeConnect:", "");
+            String data = text.replaceFirst("FORWARD_DATA:PlayerNodeConnect:", "")
+                    .replace("\n", "");
             Main.MC.player.sendChatMessage("/server " + data);
+            cancel = true;
         }
 
         if (text.startsWith("FORWARD_DATA:PlayerPlotConnect:")) {
-            String data = text.replaceFirst("FORWARD_DATA:PlayerNodeConnect:", "");
+            String data = text.replaceFirst("FORWARD_DATA:PlayerPlotConnect:", "")
+                    .replace("\n", "");
             Main.MC.player.sendChatMessage("/join " + data);
+            cancel = true;
         }
 
         if (text.startsWith("FORWARD_DATA:Heartbeat")) {
