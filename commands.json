@@ -33,10 +33,27 @@
     "plot": {
         "options": {
             "1": [
-                "dev",
-                "builder",
-                "name",
-                "ad"
+                "dev": {
+                    "arguments" [
+                        "add",
+                        "remove",
+                        "list"
+                    ]
+                },
+                "builder": {
+                    "arguments" [
+                        "add",
+                        "remove",
+                        "list"
+                    ]
+                },
+                "ad": {
+                    "arguments" [
+                        "purchase",
+                        "[message]"
+                    ]
+                },
+                "name"
             ]
         }
     }
