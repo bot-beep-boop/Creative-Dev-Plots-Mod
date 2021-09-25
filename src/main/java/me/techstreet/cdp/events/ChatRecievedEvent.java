@@ -35,6 +35,16 @@ public class ChatRecievedEvent {
             CURRENT_PATCH = CURRENT_PATCH.replace(" See the patch notes with /patch!", "");
         }
 
+        if (text.startsWith("FORWARD_DATA:PlayerNodeConnect:")) {
+            String data = text.replaceFirst("FORWARD_DATA:PlayerNodeConnect:", "");
+            Main.MC.player.sendChatMessage("/server " + data);
+        }
+
+        if (text.startsWith("FORWARD_DATA:PlayerPlotConnect:")) {
+            String data = text.replaceFirst("FORWARD_DATA:PlayerNodeConnect:", "");
+            Main.MC.player.sendChatMessage("/join " + data);
+        }
+
         if (text.startsWith("FORWARD_DATA:Heartbeat")) {
             Main.TICK_COUNTER = 0;
             Main.ON_PLOT = true;
