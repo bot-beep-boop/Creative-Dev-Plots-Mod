@@ -35,13 +35,15 @@ public class MCommandSuggestor {
 
             List<Suggestion> dest = cir.getReturnValue();
 
-            if (Main.COMMANDS != null) {
-                for (Map.Entry<String, JsonElement> entry : Main.COMMANDS.entrySet()) {
-                    String command = String.format("@%s", entry.getKey());
-                    dest.add(new Suggestion(StringRange.between(textFieldWidget.getCursor(), textFieldWidget.getCursor()), command));
+            if (Main.ON_PLOT) {
+                if (Main.COMMANDS != null) {
+                    for (Map.Entry<String, JsonElement> entry : Main.COMMANDS.entrySet()) {
+                        String command = String.format("@%s", entry.getKey());
+                        dest.add(new Suggestion(StringRange.between(textFieldWidget.getCursor(), textFieldWidget.getCursor()), command));
+                    }
+                } else {
+                    Main.MC.player.sendMessage(new LiteralText("§cA unknown error occured please send your logs in the CDP discord!"), false);
                 }
-            } else {
-                Main.MC.player.sendMessage(new LiteralText("§cA unknown error occured please send your logs in the CDP discord!"), false);
             }
 
             cir.setReturnValue(dest);
