@@ -25,7 +25,7 @@ public class MPlayerListHUD {
     @Inject(method = "getPlayerName", at = @At("RETURN"), cancellable = true)
     public void getPlayerName(PlayerListEntry entry, CallbackInfoReturnable<Text> cir) {
         UUID id = entry.getProfile().getId();
-        Text name = entry.getDisplayName() != null ? this.spectatorFormat(entry, entry.getDisplayName().shallowCopy()) : this.spectatorFormat(entry, Team.decorateName(entry.getScoreboardTeam(), new LiteralText(entry.getProfile().getName())));
+        Text name = entry.getDisplayName() != null ? this.spectatorFormat(entry, entry.getDisplayName().shallowCopy()) : this.spectatorFormat(entry, Team.modifyText(entry.getScoreboardTeam(), new LiteralText(entry.getProfile().getName())));
 
         if (Main.ON_PLOT) {
             if (Main.PREFIX_CACHE.containsKey(id.toString())) {
