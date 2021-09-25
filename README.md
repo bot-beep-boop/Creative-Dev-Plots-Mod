@@ -8,4 +8,4 @@ This `1.16.5` mod is for the [DiamondFire](http://mcdiamondfire.com) plot, Creat
 
 ## Contribution
 
-Want to add new features to the mod or fix bugs yourself? Please read [CONTRIBUTING.md](CONTRIBUTING.md) for important guidelines to follow.
+Want to add new features to the mod or fix bugs yourself? Please read [CONTRIBUTION.md](CONTRIBUTION.md) for important guidelines to follow.
