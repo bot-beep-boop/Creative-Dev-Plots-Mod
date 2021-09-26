@@ -27,6 +27,9 @@ repositories {
 	maven {
 		url "https://maven.terraformersmc.com/"
 	}
+	maven {
+		url "https://m2.tecc.me/snapshots"
+	}
 }
 
 dependencies {
@@ -38,7 +41,14 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation 'com.jagrosh:DiscordIPC:0.4'
+	// Discord RPC Library
+	modImplementation 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
+	include 'com.github.JnCrMx:discord-game-sdk4j:0.5.4'
+
+	// LibGui Library
+	//modImplementation "io.github.cottonmc:LibGui:3.2.2+1.16.3"
+	//include "io.github.cottonmc:LibGui:3.2.2+1.16.3"
+
 	modImplementation "io.github.prospector:modmenu:1.16.9"
 }
 

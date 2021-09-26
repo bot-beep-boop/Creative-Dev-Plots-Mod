@@ -3,6 +3,7 @@ package me.techstreet.cdp;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.techstreet.cdp.features.DiscordRPC;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -47,7 +48,7 @@ public class Main implements ModInitializer {
 			e.printStackTrace();
 		}
 
-		//DiscordRPC.init();
+		DiscordRPC.init();
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			TICK_COUNTER += 1;
@@ -55,12 +56,13 @@ public class Main implements ModInitializer {
 			if (TICK_COUNTER == 10) {
 				TICK_COUNTER = 0;
 				ON_PLOT = false;
-				//DiscordRPC.close();
+				DiscordRPC.close();
 			}
 		});
 	}
 
 	public void onClose() {
+		DiscordRPC.disconnect();
 	}
 
 	public static void log(Level level, String message) {

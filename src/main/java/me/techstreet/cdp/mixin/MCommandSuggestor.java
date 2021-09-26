@@ -29,25 +29,28 @@ public class MCommandSuggestor {
     @Inject(method = "method_30104", at = @At("RETURN"), cancellable = true)
     public void getSuggestionList(Suggestions suggestions, CallbackInfoReturnable<List<Suggestion>> cir) {
         Screen screen = MinecraftClient.getInstance().currentScreen;
-        if (screen instanceof ChatScreen) {
-            ChatScreen chatScreen = (ChatScreen) screen;
-            TextFieldWidget textFieldWidget = (TextFieldWidget) chatScreen.children().stream().filter(element -> element instanceof TextFieldWidget).toArray()[0];
 
-            List<Suggestion> dest = cir.getReturnValue();
+        if (false) {
+            if (screen instanceof ChatScreen) {
+                ChatScreen chatScreen = (ChatScreen) screen;
+                TextFieldWidget textFieldWidget = (TextFieldWidget) chatScreen.children().stream().filter(element -> element instanceof TextFieldWidget).toArray()[0];
 
-            if (Main.ON_PLOT) {
-                if (Main.COMMANDS != null) {
-                    for (Map.Entry<String, JsonElement> entry : Main.COMMANDS.entrySet()) {
-                        String command = String.format("@%s", entry.getKey());
-                        dest.add(new Suggestion(StringRange.between(textFieldWidget.getCursor(), textFieldWidget.getCursor()), command));
+                List<Suggestion> dest = cir.getReturnValue();
+
+                if (Main.ON_PLOT) {
+                    if (Main.COMMANDS != null) {
+                        for (Map.Entry<String, JsonElement> entry : Main.COMMANDS.entrySet()) {
+                            String command = String.format("@%s", entry.getKey());
+                            dest.add(new Suggestion(StringRange.between(textFieldWidget.getCursor(), textFieldWidget.getCursor()), command));
+                        }
+                    } else {
+                        Main.MC.player.sendMessage(new LiteralText("§cA unknown error occured please send your logs in the CDP discord!"), false);
                     }
-                } else {
-                    Main.MC.player.sendMessage(new LiteralText("§cA unknown error occured please send your logs in the CDP discord!"), false);
                 }
-            }
 
-            cir.setReturnValue(dest);
-            cir.cancel();
+                cir.setReturnValue(dest);
+                cir.cancel();
+            }
         }
     }
 }

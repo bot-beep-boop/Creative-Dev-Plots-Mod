@@ -1,6 +1,7 @@
 package me.techstreet.cdp.events;
 
 import me.techstreet.cdp.Main;
+import me.techstreet.cdp.features.DiscordRPC;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.Level;
@@ -56,10 +57,9 @@ public class ChatRecievedEvent {
         }
 
         if (text.startsWith("FORWARD_DATA:DiscordRPC:")) {
-            /*
             String data = text.replaceFirst("FORWARD_DATA:DiscordRPC:", "");
             DiscordRPC.update(data);
-             */
+
             cancel = true;
         }
 
