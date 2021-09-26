@@ -13,7 +13,7 @@
     "sources": "https://github.com/TechStreetDev/Creative-Dev-Plots-Mod"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/cdp/icon.png",
 
   "environment": "*",
